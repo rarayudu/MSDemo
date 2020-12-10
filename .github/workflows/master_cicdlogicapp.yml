@@ -29,7 +29,7 @@ jobs:
       uses: actions/checkout@v1
         
     # Deployment of template    
-    - name: Deploy ARM Template
+    - name: Deploy Connector Resources 
       uses: Azure/arm-deploy@v1.0.1
       with:
         # You can change these environment variables for your configuration:   AZURE_SUBSCRIPTION_ID, AZURE_RESOURCE_GROUP
@@ -38,6 +38,18 @@ jobs:
         resourceGroupName: ARMLaDemo
         template: ARM/template.json  # Set this to the location of your template file
         parameters: ARM/parameters.json # Set this to the location of your parameters file
+        deploymentMode: Incremental
+    # Deployment of template  
+
+    - name: Deploy Logic App Resources
+      uses: Azure/arm-deploy@v1.0.1
+      with:
+        # You can change these environment variables for your configuration:   AZURE_SUBSCRIPTION_ID, AZURE_RESOURCE_GROUP
+        scope: resourcegroup  
+        subscriptionId: ${{ secrets.subscriptionid }}
+        resourceGroupName: CICDDemo
+        template: ARM/la-template.json  # Set this to the location of your template file
+        parameters: ARM/la-parameters.json # Set this to the location of your parameters file
         deploymentMode: Complete
 
     - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment

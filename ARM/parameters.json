@@ -5,12 +5,6 @@
         "connections_sql_name": {
             "value": "sql"
         },
-        "sites_armLAdemo_name": {
-            "value": "armLAdemo"
-        },
-        "serverfarms_ASP_ARMLaDemo_bce2_name": {
-            "value": "ASP-ARMLaDemo-bce2"
-        },
         "sa_name": {
             "value": "armlastoragebl"
         }, 

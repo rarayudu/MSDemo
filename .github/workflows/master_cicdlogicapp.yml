@@ -65,6 +65,8 @@ jobs:
         parameters: ARM/la-parameters.json # Set this to the location of your parameters file
         deploymentMode: Complete
 
+    #call out to script for adding Access policies - giving permissions for logic app to talk to the connections 
+    
     - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
       uses: actions/setup-dotnet@v1
       with:
@@ -76,6 +78,7 @@ jobs:
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
         dotnet build --configuration Release --output ./output
         popd
+    #update the connectoins.json file from ./output and then deploy to Azure   
 
     - name: 'Run Azure Functions Action'
       uses: Azure/functions-action@v1

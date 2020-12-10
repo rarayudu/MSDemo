@@ -13,7 +13,35 @@ env:
   DOTNET_VERSION: '3.1.301'    # set this to the dotnet version to use
 
 jobs:
-  build-and-deploy:
+   build-and-deploy-arm: 
+    runs-on: ubuntu-latest
+    steps:
+                      
+    # Authentication
+    # Set up the following secrets in your repository: AZURE_CREDENTIALS
+    # For details on usage of secrets, please refer https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS  }}
+    
+    # Checkout
+    - name: Checkout
+      uses: actions/checkout@v1
+        
+    # Deployment of template    
+    - name: Deploy ARM Template
+      uses: Azure/arm-deploy@v1.0.1
+      with:
+        # You can change these environment variables for your configuration:   AZURE_SUBSCRIPTION_ID, AZURE_RESOURCE_GROUP
+        scope: resourcegroup  
+        subscriptionId: ${{ secrets.subscriptionid }}
+        resourceGroupName: ARMLaDemo
+        template: template.json  # Set this to the location of your template file
+        parameters: parameters.json # Set this to the location of your parameters file
+        deploymentMode: Complete
+
+  build-and-deploy-workflows:
     runs-on: windows-latest
     steps:
     - name: 'Checkout GitHub Action'

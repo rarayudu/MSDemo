@@ -9,9 +9,7 @@
       },
       "connectionRuntimeUrl": "https://2126d86fd4d6d971.17.common.logic-australiasoutheast.azure-apihub.net/apim/azureblob/b890b1722d40446fa004f064a464a6b4/",
       "authentication": {
-        "type": "Raw",
-        "scheme": "Key",
-        "parameter": "@appsetting('azureblob-connectionKey')"
+        "type": "ManagedServiceIdentity"
       }
     }
   }

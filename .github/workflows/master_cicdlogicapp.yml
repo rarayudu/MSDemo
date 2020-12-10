@@ -41,12 +41,6 @@ jobs:
         parameters: parameters.json # Set this to the location of your parameters file
         deploymentMode: Complete
 
-  build-and-deploy-workflows:
-    runs-on: windows-latest
-    steps:
-    - name: 'Checkout GitHub Action'
-      uses: actions/checkout@master
-
     - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
       uses: actions/setup-dotnet@v1
       with:

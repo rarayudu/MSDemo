@@ -91,12 +91,12 @@
                 "enabled": true,
                 "hostNameSslStates": [
                     {
-                        "name": "[concat(parameters('sites_armLAdemo_name'),'.azurewebsites.net)]",
+                        "name": "[concat(parameters('sites_armLAdemo_name'),'.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "hostType": "Standard"
                     },
                     {
-                        "name": "[concat(parameters('sites_armLAdemo_name'),'.scm.azurewebsites.net)]",
+                        "name": "[concat(parameters('sites_armLAdemo_name'),'.scm.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "hostType": "Repository"
                     }

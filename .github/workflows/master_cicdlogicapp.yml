@@ -52,24 +52,6 @@ jobs:
         template: ARM/template.json  # Set this to the location of your template file
         parameters: ARM/parameters.json # Set this to the location of your parameters file
         deploymentMode: Incremental
-    # Deployment of template  
-
-    - name: Deploy Logic App Resources
-      uses: Azure/arm-deploy@v1.0.1
-      with:
-        # You can change these environment variables for your configuration:   AZURE_SUBSCRIPTION_ID, AZURE_RESOURCE_GROUP
-        scope: resourcegroup  
-        subscriptionId: ${{ secrets.subscriptionid }}
-        resourceGroupName: CICDDemo
-        template: ARM/la-template.json  # Set this to the location of your template file
-        parameters: ARM/la-parameters.json # Set this to the location of your parameters file
-        deploymentMode: Complete
-
-    #call out to script for adding Access policies - giving permissions for logic app to talk to the connections 
-    - name: Add Access Policies
-      shell: pwsh
-      run: |
-        .\SCRIPTs\addaccesspolicy.ps1
 
     - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
       uses: actions/setup-dotnet@v1

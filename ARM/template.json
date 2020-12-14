@@ -2,6 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "logicAppSystemAssignedIdentityTenantId": {
+            "type": "string"
+        },
+        "logicAppSystemAssignedIdentityObjectId": {
+            "type": "string"
+        },
         "connections_sql_name": {
             "defaultValue": "sql",
             "type": "string"
@@ -50,6 +56,24 @@
                 },
                 "api": {
                     "id": "/subscriptions/80b60a27-4eab-437e-899f-dde369cd1c17/providers/Microsoft.Web/locations/australiasoutheast/managedApis/azureblob"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections/accessPolicies",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('connections_azureblob_2_name')]/[parameters('logicAppSystemAssignedIdentityObjectId')]",
+            "location": "australiasoutheast",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/connections', parameters('connections_azureblob_2_name'))]"
+            ],
+            "properties": {
+                "principal": {
+                    "type": "ActiveDirectory",
+                    "identity": {
+                        "tenantId": "[parameters('logicAppSystemAssignedIdentityTenantId')]",
+                        "objectId": "[parameters('logicAppSystemAssignedIdentityObjectId')]"
+                    }
                 }
             }
         },
@@ -106,5 +130,33 @@
                 }
             }
         }
-    ]
+        {
+            "type": "Microsoft.Web/connections/accessPolicies",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('connections_sql_name')]/[parameters('logicAppSystemAssignedIdentityObjectId')]",
+            "location": "australiasoutheast",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/connections', parameters('connections_sql_name'))]"
+            ],
+            "properties": {
+                "principal": {
+                    "type": "ActiveDirectory",
+                    "identity": {
+                        "tenantId": "[parameters('logicAppSystemAssignedIdentityTenantId')]",
+                        "objectId": "[parameters('logicAppSystemAssignedIdentityObjectId')]"
+                    }
+                }
+            }
+        },
+    ],
+    "outputs": {
+        "azureBlobConnectionRuntimeUrl": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Web/connections', parameters('connections_azureblob_2_name')),'2019-08-01', 'full').properties.connectionRuntimeUrl]"
+        },
+        "sqlConnectionRuntimeUrl": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Web/connections', parameters('connections_sql_name')),'2019-08-01', 'full').properties.connectionRuntimeUrl]"
+        }
+    }
 }

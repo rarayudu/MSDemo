@@ -66,10 +66,10 @@ jobs:
         deploymentMode: Complete
 
     #call out to script for adding Access policies - giving permissions for logic app to talk to the connections 
-     - name: Build
-        shell: pwsh
-        run: |
-          .\SCRIPTs\addaccesspolicy.ps1
+    - name: Add Access Policies
+      shell: pwsh
+      run: |
+        .\SCRIPTs\addaccesspolicy.ps1
 
     - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
       uses: actions/setup-dotnet@v1
